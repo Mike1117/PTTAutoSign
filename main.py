@@ -7,15 +7,16 @@ from typing import Union
 
 
 class Bot:
-    def __init__(self, token: str, chat_id: Union[str, int]):
+    def __init__(self, token: str):
         self.token = token
-        self.chat_id = chat_id
-        self.api_url = f"https://api.telegram.org/bot{self.token}"
+        self.api_url = "https://notify-api.line.me/api/notify"
+        self.headers = {'Authorization': 'Bearer ' + self.token}
 
     def send_message(self, text: str):
         r = requests.post(
-            self.api_url + "/sendMessage",
-            json={"chat_id": self.chat_id, "text": text, "parse_mode": "html"},
+            self.api_url,
+            headers=self.headers,
+            data={"message": text}
         )
 
 
